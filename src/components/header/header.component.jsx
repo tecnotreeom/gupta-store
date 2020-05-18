@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import  {createStructuredSelector} from 'reselect';
-
+import {signOutStart} from '../../redux/user/user.actions'
 import {selectCartHidden} from '../../redux/cart/cart.selector';
 import {selectCurrentUser} from '../../redux/user/user.selectors';
 import { auth } from '../../firebase/firebase.utils';
@@ -15,7 +15,7 @@ import { ReactComponent as Logo } from '../../assets/crown.svg';
 
 import {HeaderContainer, LogoContainer, OptionsContainer, OptionDiv, OptionLink} from './header.styles'
 
-const Header = ({ currentUser, hidden }) => (
+const Header = ({ currentUser, hidden , signOutStart}) => (
   <HeaderContainer>
     <LogoContainer to='/'>
       <Logo className='logo' />
@@ -28,7 +28,7 @@ const Header = ({ currentUser, hidden }) => (
         CONTACT
       </OptionLink>
       {currentUser ? (
-        <OptionDiv onClick={() => auth.signOut()}>
+        <OptionDiv onClick={signOutStart}>
           SIGN OUT
         </OptionDiv>
       ) : (
@@ -50,4 +50,8 @@ const mapStateToProps =  createStructuredSelector({
   hidden: selectCartHidden
 });
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = dispatch => ({
+  signOutStart: () => dispatch(signOutStart())
+})
+ 
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
