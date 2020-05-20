@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {connect} from 'react-redux';
 
@@ -8,7 +8,19 @@ import CollectionItem from '../../components/collection-item/collection-item.com
 
 import './category.style.scss';
 
+import {firestore} from '../../firebase/firebase.utils';
 const CategoryPage = ({collections}) => {
+
+    useEffect(() => {
+        console.log('Hi I am Subscribe');
+        const unsubscribeFromCollection = firestore
+            .collection('collections')
+            .onSnapshot(snapshot => console.log(snapshot));
+        return () => {
+            console.log('Hi i am unSubscribe');
+            unsubscribeFromCollection();
+        }
+    });
     const {title, items} = collections;
     return (
         <div className="collection-page">

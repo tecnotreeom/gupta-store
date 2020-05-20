@@ -13,6 +13,8 @@ import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { setCurrentUser } from './redux/user/user.actions';
 import  {createStructuredSelector} from 'reselect';
 import {selectCurrentUser} from './redux/user/user.selectors';
+import Example from './components/hooks-example/Example';
+
 class App extends React.Component {
   unsubscribeFromAuth = null;
 
@@ -43,6 +45,7 @@ class App extends React.Component {
     return (
       <div>
         <Header />
+        {/* <Example/> */}
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route path='/shop' component={ShopPage} />
